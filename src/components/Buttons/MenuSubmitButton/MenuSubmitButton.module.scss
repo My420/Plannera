@@ -1,6 +1,8 @@
 @import '../../../sass/variables.scss';
+@import '../../../sass/mixins.scss';
 
 .button {
+  @include menu-button;
   opacity: 1;
   box-sizing: border-box;
 
@@ -15,9 +17,16 @@
   font-weight: 700;
   color: $fonts-auth-color;
 
-  transition: all 500ms linear;
+  transition: opacity 500ms linear;
 }
 
 .button:disabled {
   opacity: 0;
+}
+
+@media (max-width: $mobile-large) {
+  .button {
+    width: 280px;
+    height: 30px;
+  }
 }

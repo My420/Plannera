@@ -1,6 +1,5 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { InputAttributeType } from '../../types/types';
+import { InputAttributeType } from '../../../types/types';
 import styles from './AuthInput.module.scss';
 
 export interface AuthInputProps extends React.HTMLAttributes<HTMLInputElement> {

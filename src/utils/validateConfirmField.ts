@@ -6,6 +6,6 @@ export interface IValidateConfirmField {
 
 const validateConfirmField: IValidateConfirmField = (value, password) => (value === password
   ? { isValid: true, error: '' }
-  : { isValid: false, error: 'passwords do not match' });
+  : { isValid: false, error: 'does not match password field' });
 
 export default validateConfirmField;

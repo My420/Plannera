@@ -1,5 +1,13 @@
 @import './variables.scss';
 
+@mixin outline {
+  outline: 2px solid $hover-auth-input-color;
+}
+
+@mixin opacity {
+  opacity: 0.4;
+}
+
 @mixin auth-form {
   width: 400px;
   padding: 30px 20px;
@@ -8,4 +16,56 @@
   background-color: $bg-auth-form-color;
 
   color: $fonts-auth-color;
+
+  @media (max-width: $mobile-large) {
+    width: 300px;
+    padding: 10px 0px;
+  }
+}
+
+@mixin text-link {
+  color: $fonts-app-color;
+  &:hover {
+    color: $hover-text-link-color;
+  }
+  &:active {
+    opacity: 0.4;
+  }
+  &:focus {
+    outline: none;
+    color: $hover-text-link-color;
+  }
+}
+
+@mixin auth-input {
+  &:hover {
+    @include outline;
+  }
+  &:active {
+    @include opacity;
+  }
+
+  &:focus {
+    @include outline;
+  }
+}
+
+@mixin menu-button {
+  outline: none;
+  &:hover {
+    background-color: $hover-auth-button-color;
+  }
+
+  &:active {
+    @include opacity;
+  }
+
+  &:focus {
+    background-color: $hover-auth-button-color;
+  }
+  &:disabled {
+    opacity: 0.5;
+    background-color: $bg-button-disabled;
+    color: $fonts-app-disabled;
+  }
 }

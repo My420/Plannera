@@ -7,7 +7,11 @@ import validateEmail from '../../utils/validateEmail';
 import validatePassword from '../../utils/validatePassword';
 import validateConfirmField from '../../utils/validateConfirmField';
 import validateNameField from '../../utils/validateNameField';
-import AuthInput from '../AuthInput';
+import EmailAuthInput from '../Inputs/EmailAuthInput';
+import PasswordAuthInput from '../Inputs/PasswordAuthInput';
+import ConfirmAuthInput from '../Inputs/ConfirmAuthInput';
+import FirstNameAuthInput from '../Inputs/FirstNameAuthInput';
+import LastNameAuthInput from '../Inputs/LastNameAuthInput';
 import MenuSubmitButton from '../Buttons/MenuSubmitButton';
 import styles from './SignUpForm.module.scss';
 
@@ -75,7 +79,7 @@ const SignUpForm: React.FC = () => {
   const onSubmit = (evt: React.MouseEvent<HTMLButtonElement>): void => {
     evt.preventDefault();
     // eslint-disable-next-line no-console
-    console.log('some AC', evt.currentTarget.dataset.name);
+    console.log('some AC', evt.currentTarget.dataset.name, state);
   };
 
   const isSubmitDisabled: boolean = !(
@@ -88,70 +92,44 @@ const SignUpForm: React.FC = () => {
 
   return (
     <form className={styles.form} name="signUpForm" action="signup.php">
+      <p className={styles.title}>Create account</p>
       <fieldset className={styles.signup}>
-        <AuthInput
+        <EmailAuthInput
           extensionContainerClass={styles.input}
-          id="email"
-          name={`${EMAIL}`}
-          type="text"
           value={state[EMAIL].value}
           isValid={state[EMAIL].isValid}
           error={state[EMAIL].error}
           onInputChange={setNewValue}
-          placeholder="Email"
-          label="Email"
         />
-
-        <AuthInput
+        <PasswordAuthInput
           extensionContainerClass={styles.input}
-          id="password"
-          name={`${PASSWORD}`}
-          type="password"
           value={state[PASSWORD].value}
           isValid={state[PASSWORD].isValid}
           error={state[PASSWORD].error}
           onInputChange={setNewValue}
-          placeholder="Password"
-          label="Password"
         />
-
-        <AuthInput
+        <ConfirmAuthInput
           extensionContainerClass={styles.input}
-          id="confirm"
-          name={`${CONFIRM}`}
-          type="password"
           value={state[CONFIRM].value}
           isValid={state[CONFIRM].isValid}
           error={state[CONFIRM].error}
           onInputChange={setNewValue}
-          placeholder="Confirm password"
-          label="Confirm password"
         />
 
-        <AuthInput
+        <FirstNameAuthInput
           extensionContainerClass={styles.input}
-          id="firstName"
-          name={`${FIRST_NAME}`}
-          type="text"
           value={state[FIRST_NAME].value}
           isValid={state[FIRST_NAME].isValid}
           error={state[FIRST_NAME].error}
           onInputChange={setNewValue}
-          placeholder="First name"
-          label="First name"
         />
 
-        <AuthInput
+        <LastNameAuthInput
           extensionContainerClass={styles.input}
-          id="lastName"
-          name={`${LAST_NAME}`}
-          type="text"
           value={state[LAST_NAME].value}
           isValid={state[LAST_NAME].isValid}
           error={state[LAST_NAME].error}
           onInputChange={setNewValue}
-          placeholder="Last name"
-          label="Last name"
         />
       </fieldset>
       <fieldset className={styles.controls}>
@@ -161,6 +139,9 @@ const SignUpForm: React.FC = () => {
           onButtonClick={onSubmit}
           disabled={isSubmitDisabled}
         />
+        <a className={styles.link} href="\signin">
+          Sign in
+        </a>
       </fieldset>
     </form>
   );

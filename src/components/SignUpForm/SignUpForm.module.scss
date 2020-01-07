@@ -25,6 +25,32 @@
   border: none;
 }
 
+.controls {
+  display: block;
+}
+
 .signup {
   margin-bottom: 30px;
+}
+
+.link {
+  @include text-link;
+  display: block;
+  width: 70px;
+  margin: 0 auto;
+  margin-top: 10px;
+
+  text-align: center;
+  color: $fonts-auth-color;
+}
+
+@media (max-width: $mobile-large) {
+  .signup,
+  .controls {
+    width: 280px;
+  }
+
+  .title {
+    margin-bottom: 0px;
+  }
 }
