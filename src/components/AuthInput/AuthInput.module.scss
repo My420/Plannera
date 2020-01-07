@@ -1,0 +1,45 @@
+@import '../../sass/variables.scss';
+
+.label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 300px;
+}
+
+.input {
+  box-sizing: border-box;
+
+  width: 300px;
+  height: 40px;
+
+  padding: 0 5px;
+
+  border: none;
+  border-radius: 3px;
+
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  color: $fonts-auth-color;
+}
+
+.error,
+.valid {
+  min-height: 14px;
+
+  padding: 10px 2px 0 2px;
+  font-size: 12px;
+  line-height: 14px;
+  color: $fonts-app-error-color;
+}
+
+.valid {
+  opacity: 0;
+}
+
+.notValid {
+  background-color: red;
+}

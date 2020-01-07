@@ -1,0 +1,11 @@
+@import './variables.scss';
+
+@mixin auth-form {
+  width: 400px;
+  padding: 30px 20px;
+
+  border-radius: 3px;
+  background-color: $bg-auth-form-color;
+
+  color: $fonts-auth-color;
+}

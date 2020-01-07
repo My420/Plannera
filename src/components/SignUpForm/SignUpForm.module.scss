@@ -1,0 +1,30 @@
+@import '../../sass/variables.scss';
+@import '../../sass/mixins.scss';
+
+.form {
+  @include auth-form;
+}
+
+.title {
+  margin-bottom: 10px;
+  font-weight: 700;
+  text-align: center;
+  color: $fonts-auth-color;
+}
+
+.signup,
+.controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 300px;
+  margin: 0 auto;
+
+  border: none;
+}
+
+.signup {
+  margin-bottom: 30px;
+}

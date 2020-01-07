@@ -1,0 +1,23 @@
+@import '../../../sass/variables.scss';
+
+.button {
+  opacity: 1;
+  box-sizing: border-box;
+
+  width: 300px;
+  height: 40px;
+
+  border: none;
+  border-radius: 3px;
+
+  background-color: $bg-app-color;
+
+  font-weight: 700;
+  color: $fonts-auth-color;
+
+  transition: all 500ms linear;
+}
+
+.button:disabled {
+  opacity: 0;
+}
