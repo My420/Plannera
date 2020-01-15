@@ -29,3 +29,6 @@ export interface IFieldValidator {
   isValid: boolean;
   error: string;
 }
+export interface IErrorConstant {
+  [key: string]: IFieldValidator;
+}

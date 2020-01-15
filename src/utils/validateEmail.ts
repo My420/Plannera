@@ -1,9 +1,9 @@
-import { IFieldValidator } from '../types/interfaces';
+import { IFieldValidator, IErrorConstant } from '../types/interfaces';
 
 // eslint-disable-next-line no-useless-escape
 const tester = /^[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
 
-export const ERROR = {
+export const ERROR: IErrorConstant = {
   EMPTY: { isValid: false, error: 'field cannot be empty.' },
   TO_LONG: { isValid: false, error: 'email address is too long' },
   NOT_VALID: { isValid: false, error: 'invalid email address' },

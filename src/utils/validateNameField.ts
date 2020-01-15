@@ -1,10 +1,10 @@
-import { IFieldValidator } from '../types/interfaces';
+import { IFieldValidator, IErrorConstant } from '../types/interfaces';
 
 export interface IValidateNameField {
   (value: string): IFieldValidator;
 }
 
-export const ERROR = {
+export const ERROR: IErrorConstant = {
   NOT_VALID_SYMBOL: { isValid: false, error: 'only letters and numbers' },
   TO_SHORT: { isValid: false, error: 'must be longer than 2 characters' },
   TO_LONG: { isValid: false, error: 'must be less than 20 characters long' },

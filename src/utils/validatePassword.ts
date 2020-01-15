@@ -1,4 +1,4 @@
-import { IFieldValidator } from '../types/interfaces';
+import { IFieldValidator, IErrorConstant } from '../types/interfaces';
 
 export interface IValidatePassword {
   (value: string): IFieldValidator;
@@ -7,7 +7,7 @@ export interface IValidatePassword {
 export const PASSWORD_MIN_LENGTH = 5;
 export const PASSWORD_MAX_LENGTH = 20;
 
-export const ERROR = {
+export const ERROR: IErrorConstant = {
   TO_SHORT: { isValid: false, error: `must be longer than ${PASSWORD_MIN_LENGTH} characters` },
   TO_LONG: { isValid: false, error: `must be less than ${PASSWORD_MAX_LENGTH} characters long` },
 };
