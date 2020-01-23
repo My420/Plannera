@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import { IAuthState, IAuthAction, IAuthField } from '../../types/interfaces';
+import { ISignUpState, IAuthAction, IAuthField } from '../../types/interfaces';
 import {
   EMAIL, PASSWORD, CONFIRM, FIRST_NAME, LAST_NAME,
 } from '../../utils/constant';
@@ -15,60 +15,60 @@ import LastNameAuthInput from '../Inputs/LastNameAuthInput';
 import MenuSubmitButton from '../Buttons/MenuSubmitButton';
 import styles from './SignUpForm.module.scss';
 
-const SignUpForm: React.FC = () => {
-  const field: IAuthField = { value: '', isValid: false, error: '' };
-  const initialState: IAuthState = {
-    [EMAIL]: { ...field },
-    [PASSWORD]: { ...field },
-    [CONFIRM]: { ...field },
-    [FIRST_NAME]: { ...field },
-    [LAST_NAME]: { ...field },
-  };
+const field: IAuthField = { value: '', isValid: false, error: '' };
+const initialState: ISignUpState = {
+  [EMAIL]: { ...field },
+  [PASSWORD]: { ...field },
+  [CONFIRM]: { ...field },
+  [FIRST_NAME]: { ...field },
+  [LAST_NAME]: { ...field },
+};
 
-  const reducer = (state: IAuthState, action: IAuthAction) => {
-    const {
-      type,
-      payload: { value },
-    } = action;
+const reducer = (state: ISignUpState, action: IAuthAction) => {
+  const {
+    type,
+    payload: { value },
+  } = action;
 
-    const newState = (isValid: boolean, error: string): IAuthState => ({
-      ...state,
-      [type]: { value, isValid, error },
-    });
+  const newState = (isValid: boolean, error: string): ISignUpState => ({
+    ...state,
+    [type]: { value, isValid, error },
+  });
 
-    switch (type) {
-      case EMAIL: {
-        const { isValid, error } = validateEmail(value);
-        return newState(isValid, error);
-      }
-      case PASSWORD: {
-        const passwordStatus = validatePassword(value);
-        const confirmStatus = validateConfirmField(state[CONFIRM].value, value);
-        if (!passwordStatus.isValid || (passwordStatus.isValid && confirmStatus.isValid)) {
-          return newState(passwordStatus.isValid, passwordStatus.error);
-        }
-        return {
-          ...newState(passwordStatus.isValid, passwordStatus.error),
-          [CONFIRM]: { ...state[CONFIRM], ...confirmStatus },
-        };
-      }
-      case CONFIRM: {
-        const { isValid, error } = validateConfirmField(value, state[PASSWORD].value);
-        return newState(isValid, error);
-      }
-      case FIRST_NAME: {
-        const { isValid, error } = validateNameField(value);
-        return newState(isValid, error);
-      }
-      case LAST_NAME: {
-        const { isValid, error } = validateNameField(value);
-        return newState(isValid, error);
-      }
-      default:
-        return state;
+  switch (type) {
+    case EMAIL: {
+      const { isValid, error } = validateEmail(value);
+      return newState(isValid, error);
     }
-  };
+    case PASSWORD: {
+      const passwordStatus = validatePassword(value);
+      const confirmStatus = validateConfirmField(state[CONFIRM].value, value);
+      if (!passwordStatus.isValid || (passwordStatus.isValid && confirmStatus.isValid)) {
+        return newState(passwordStatus.isValid, passwordStatus.error);
+      }
+      return {
+        ...newState(passwordStatus.isValid, passwordStatus.error),
+        [CONFIRM]: { ...state[CONFIRM], ...confirmStatus },
+      };
+    }
+    case CONFIRM: {
+      const { isValid, error } = validateConfirmField(value, state[PASSWORD].value);
+      return newState(isValid, error);
+    }
+    case FIRST_NAME: {
+      const { isValid, error } = validateNameField(value);
+      return newState(isValid, error);
+    }
+    case LAST_NAME: {
+      const { isValid, error } = validateNameField(value);
+      return newState(isValid, error);
+    }
+    default:
+      return state;
+  }
+};
 
+const SignUpForm: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const setNewValue = (name: string, value: string): void => {
@@ -79,7 +79,7 @@ const SignUpForm: React.FC = () => {
   const onSubmit = (evt: React.MouseEvent<HTMLButtonElement>): void => {
     evt.preventDefault();
     // eslint-disable-next-line no-console
-    console.log('some AC', evt.currentTarget.dataset.name, state);
+    console.log('some AC', evt.currentTarget.name, state);
   };
 
   const isSubmitDisabled: boolean = !(
@@ -135,7 +135,7 @@ const SignUpForm: React.FC = () => {
       <fieldset className={styles.controls}>
         <MenuSubmitButton
           text="Sign up"
-          dataName="signUpSubmit"
+          name="signUpSubmit"
           onButtonClick={onSubmit}
           disabled={isSubmitDisabled}
         />

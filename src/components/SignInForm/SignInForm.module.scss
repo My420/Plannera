@@ -1,0 +1,56 @@
+@import '../../sass/variables.scss';
+@import '../../sass/mixins.scss';
+
+.form {
+  @include auth-form;
+}
+
+.title {
+  margin-bottom: 10px;
+  font-weight: 700;
+  text-align: center;
+  color: $fonts-auth-color;
+}
+
+.signin,
+.controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 300px;
+  margin: 0 auto;
+
+  border: none;
+}
+
+.controls {
+  display: block;
+}
+
+.signin {
+  margin-bottom: 30px;
+}
+
+.link {
+  @include text-link;
+  display: block;
+  width: 70px;
+  margin: 0 auto;
+  margin-top: 10px;
+
+  text-align: center;
+  color: $fonts-auth-color;
+}
+
+@media (max-width: $mobile-large) {
+  .signin,
+  .controls {
+    width: 280px;
+  }
+
+  .title {
+    margin-bottom: 0px;
+  }
+}

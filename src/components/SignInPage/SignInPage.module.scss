@@ -1,0 +1,33 @@
+@import '../../sass/variables.scss';
+
+.page {
+  width: 100vw;
+  height: 100vh;
+}
+.title {
+  text-align: center;
+}
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  width: 100%;
+  height: 100%;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+}
+
+.appName {
+  margin-bottom: 30px;
+}
+
+@media (max-width: $mobile-large) {
+  .appName {
+    margin-bottom: 10px;
+  }
+}

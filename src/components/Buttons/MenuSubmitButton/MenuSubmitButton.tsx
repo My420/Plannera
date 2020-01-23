@@ -9,14 +9,14 @@ export interface MenuSubmitButtonProps
   HTMLButtonElement
   > {
   text: string;
-  dataName: string;
+  name: string;
   onButtonClick: (evt: React.MouseEvent<HTMLButtonElement>) => void;
   extensionClass?: string;
 }
 
 const MenuSubmitButton: React.FC<MenuSubmitButtonProps> = ({
   text,
-  dataName,
+  name,
   extensionClass,
   onButtonClick,
   ...rest
@@ -24,7 +24,7 @@ const MenuSubmitButton: React.FC<MenuSubmitButtonProps> = ({
   <button
     className={`${styles.button} ${extensionClass}`}
     type="submit"
-    data-name={dataName}
+    name={name}
     onClick={onButtonClick}
     {...rest}
   >
