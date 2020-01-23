@@ -28,7 +28,6 @@ const AuthInput: React.FC<AuthInputProps> = ({
   extensionInputClass,
   isValid,
   error,
-  ...rest
 }) => {
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name: inputName, value: newValue } = evt.currentTarget;
@@ -50,7 +49,6 @@ const AuthInput: React.FC<AuthInputProps> = ({
         type={type}
         placeholder={placeholder}
         onChange={handleChange}
-        {...rest}
       />
     </label>
   );

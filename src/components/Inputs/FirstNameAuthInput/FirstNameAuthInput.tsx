@@ -1,6 +1,6 @@
 import React from 'react';
 import { FIRST_NAME } from '../../../utils/constant';
-import AuthInput from '../AuthInput/AuthInput';
+import AuthInput from '../AuthInput';
 
 export interface FirstNameAuthInputProps {
   extensionContainerClass?: string;

@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test EmailAuthInput component should match snapshot 1`] = `
+<Memo(AuthInput)
+  error=""
+  extensionContainerClass="testContainerClass"
+  extensionInputClass="testInputClass"
+  id="email"
+  isValid={false}
+  label="Email"
+  name="EMAIL"
+  onInputChange={[Function]}
+  placeholder="Email"
+  type="email"
+  value=""
+/>
+`;

@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test AuthInput component should match snapshot 1`] = `
+<label
+  className="label "
+  htmlFor="testID"
+>
+  <span
+    className="visually-hidden"
+  >
+    test label
+  </span>
+  <span
+    className="error"
+  >
+     
+  </span>
+  <input
+    className="input "
+    id="testID"
+    name="test name"
+    onChange={[Function]}
+    placeholder="enter test text"
+    type="text"
+    value=""
+  />
+</label>
+`;

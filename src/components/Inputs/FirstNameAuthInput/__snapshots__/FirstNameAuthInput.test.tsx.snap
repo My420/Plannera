@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test FirstNameAuthInput component should match snapshot 1`] = `
+<Memo(AuthInput)
+  error=""
+  extensionContainerClass="testContainerClass"
+  extensionInputClass="testInputClass"
+  id="firstName"
+  isValid={false}
+  label="First name"
+  name="FIRST_NAME"
+  onInputChange={[Function]}
+  placeholder="First name"
+  type="text"
+  value=""
+/>
+`;
