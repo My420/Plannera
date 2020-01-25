@@ -69,3 +69,22 @@
     color: $fonts-app-disabled;
   }
 }
+
+@mixin header-button {
+  padding: 4px 8px;
+
+  border: none;
+  border-radius: 3px;
+
+  background-color: $bg-header-button-color;
+
+  color: $fonts-header-color;
+
+  &:hover {
+    background-color: $hover-auth-button-color;
+  }
+
+  &:active {
+    @include opacity;
+  }
+}
