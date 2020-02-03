@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import store, { history } from '../../redux/store';
 import Root from '../Root';
+import '../../firebase/config';
 
 // import styles from './App.module.scss';
 
