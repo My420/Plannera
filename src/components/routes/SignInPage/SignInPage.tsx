@@ -1,7 +1,7 @@
 import React from 'react';
-import { APP_NAME } from '../../utils/constant';
-import SignInForm from '../SignInForm';
-import Logo from '../Logo';
+import { APP_NAME } from '../../../utils/constant';
+import SignInForm from '../../SignInForm';
+import Logo from '../../Logo';
 import styles from './SignInPage.module.scss';
 
 const SignInPage: React.FC = () => (

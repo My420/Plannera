@@ -1,0 +1,9 @@
+@import '../../sass/mixins.scss';
+
+.boardsButton {
+  margin-left: 5px;
+}
+
+.homeLink {
+  @include header-button;
+}

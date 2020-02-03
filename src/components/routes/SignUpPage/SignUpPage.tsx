@@ -1,8 +1,8 @@
 import React from 'react';
-import { APP_NAME } from '../../utils/constant';
-import SignUpForm from '../SignUpForm';
+import { APP_NAME } from '../../../utils/constant';
+import SignUpForm from '../../SignUpForm';
 import styles from './SignUpPage.module.scss';
-import Logo from '../Logo';
+import Logo from '../../Logo';
 
 const SignUpPage: React.FC = () => (
   <section className={styles.page}>
