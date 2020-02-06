@@ -1,5 +1,9 @@
 import React, { useReducer } from 'react';
-import { ISignUpState, IAuthAction, IAuthField } from '../../types/interfaces';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import {
+  ISignUpState, IAuthAction, IAuthField, ISignUpFormData,
+} from '../../types/signUpForm';
 import {
   EMAIL, PASSWORD, CONFIRM, FIRST_NAME, LAST_NAME,
 } from '../../utils/constant';
@@ -14,6 +18,8 @@ import FirstNameAuthInput from '../Inputs/FirstNameAuthInput';
 import LastNameAuthInput from '../Inputs/LastNameAuthInput';
 import MenuSubmitButton from '../Buttons/MenuSubmitButton';
 import styles from './SignUpForm.module.scss';
+import { signUp } from '../../ducks/auth';
+import AppActions from '../../ducks/appActionsType';
 
 const field: IAuthField = { value: '', isValid: false, error: '' };
 const initialState: ISignUpState = {
@@ -68,7 +74,11 @@ const reducer = (state: ISignUpState, action: IAuthAction) => {
   }
 };
 
-const SignUpForm: React.FC = () => {
+export interface ISignUpFormProps {
+  onSubmitClick: (data: ISignUpFormData) => void;
+}
+
+const SignUpForm: React.FC<ISignUpFormProps> = ({ onSubmitClick }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const setNewValue = (name: string, value: string): void => {
@@ -78,8 +88,12 @@ const SignUpForm: React.FC = () => {
 
   const onSubmit = (evt: React.MouseEvent<HTMLButtonElement>): void => {
     evt.preventDefault();
-    // eslint-disable-next-line no-console
-    console.log('some AC', evt.currentTarget.name, state);
+    onSubmitClick({
+      [EMAIL]: state[EMAIL].value,
+      [PASSWORD]: state[PASSWORD].value,
+      [FIRST_NAME]: state[FIRST_NAME].value,
+      [LAST_NAME]: state[LAST_NAME].value,
+    });
   };
 
   const isSubmitDisabled: boolean = !(
@@ -147,4 +161,8 @@ const SignUpForm: React.FC = () => {
   );
 };
 
-export default SignUpForm;
+const mapDispatchToProps = (dispatch: Dispatch<AppActions>) => ({
+  onSubmitClick: (data: ISignUpFormData) => dispatch(signUp(data)),
+});
+
+export default connect(null, mapDispatchToProps)(SignUpForm);

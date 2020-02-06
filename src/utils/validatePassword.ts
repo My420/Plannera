@@ -1,4 +1,4 @@
-import { IFieldValidator, IErrorConstant } from '../types/interfaces';
+import { IFieldValidator, IErrorConstant } from '../types/signUpForm';
 
 export interface IValidatePassword {
   (value: string): IFieldValidator;

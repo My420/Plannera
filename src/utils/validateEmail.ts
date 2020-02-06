@@ -1,4 +1,4 @@
-import { IFieldValidator, IErrorConstant } from '../types/interfaces';
+import { IFieldValidator, IErrorConstant } from '../types/signUpForm';
 
 // eslint-disable-next-line no-useless-escape
 const tester = /^[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;

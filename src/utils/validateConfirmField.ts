@@ -1,4 +1,4 @@
-import { IFieldValidator } from '../types/interfaces';
+import { IFieldValidator } from '../types/signUpForm';
 
 export interface IValidateConfirmField {
   (value: string, password: string): IFieldValidator;

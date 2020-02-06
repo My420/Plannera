@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import { ISignInState, IAuthAction, IAuthField } from '../../types/interfaces';
+import { ISignInState, IAuthAction, IAuthField } from '../../types/signUpForm';
 import { EMAIL, PASSWORD } from '../../utils/constant';
 import validateEmail from '../../utils/validateEmail';
 import validatePassword from '../../utils/validatePassword';

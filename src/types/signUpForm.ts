@@ -2,6 +2,13 @@ import {
   EMAIL, PASSWORD, CONFIRM, LAST_NAME, FIRST_NAME,
 } from '../utils/constant';
 
+export interface ISignUpFormData {
+  [EMAIL]: string;
+  [PASSWORD]: string;
+  [FIRST_NAME]: string;
+  [LAST_NAME]: string;
+}
+
 export interface ISignUpState {
   [EMAIL]: IAuthField;
   [PASSWORD]: IAuthField;
