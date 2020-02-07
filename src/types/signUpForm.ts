@@ -9,6 +9,11 @@ export interface ISignUpFormData {
   [LAST_NAME]: string;
 }
 
+export interface ISignInFormData {
+  [EMAIL]: string;
+  [PASSWORD]: string;
+}
+
 export interface ISignUpState {
   [EMAIL]: IAuthField;
   [PASSWORD]: IAuthField;

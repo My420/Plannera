@@ -1,5 +1,9 @@
 import React, { useReducer } from 'react';
-import { ISignInState, IAuthAction, IAuthField } from '../../types/signUpForm';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import {
+  ISignInState, IAuthAction, IAuthField, ISignInFormData,
+} from '../../types/signUpForm';
 import { EMAIL, PASSWORD } from '../../utils/constant';
 import validateEmail from '../../utils/validateEmail';
 import validatePassword from '../../utils/validatePassword';
@@ -7,6 +11,8 @@ import EmailAuthInput from '../Inputs/EmailAuthInput';
 import PasswordAuthInput from '../Inputs/PasswordAuthInput';
 import MenuSubmitButton from '../Buttons/MenuSubmitButton';
 import styles from './SignInForm.module.scss';
+import AppActions from '../../ducks/appActionsType';
+import { signIn } from '../../ducks/auth';
 
 const field: IAuthField = { value: '', isValid: false, error: '' };
 const initialState: ISignInState = {
@@ -39,7 +45,11 @@ const reducer = (state: ISignInState, action: IAuthAction) => {
   }
 };
 
-const SignInForm: React.FC = () => {
+export interface ISignInFormProps {
+  onSubmitClick: (data: ISignInFormData) => void;
+}
+
+const SignInForm: React.FC<ISignInFormProps> = ({ onSubmitClick }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const setNewValue = (name: string, value: string): void => {
@@ -49,8 +59,10 @@ const SignInForm: React.FC = () => {
 
   const onSubmit = (evt: React.MouseEvent<HTMLButtonElement>): void => {
     evt.preventDefault();
-    // eslint-disable-next-line no-console
-    console.log('some AC', evt.currentTarget.name, state);
+    onSubmitClick({
+      [EMAIL]: state[EMAIL].value,
+      [PASSWORD]: state[PASSWORD].value,
+    });
   };
 
   const isSubmitDisabled: boolean = !(state[EMAIL].isValid && state[PASSWORD].isValid);
@@ -88,4 +100,8 @@ const SignInForm: React.FC = () => {
   );
 };
 
-export default SignInForm;
+const mapDispatchToProps = (dispatch: Dispatch<AppActions>) => ({
+  onSubmitClick: (data: ISignInFormData) => dispatch(signIn(data)),
+});
+
+export default connect(null, mapDispatchToProps)(SignInForm);
