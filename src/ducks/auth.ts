@@ -1,14 +1,20 @@
 import { Record } from 'immutable';
 import { put, takeEvery, all } from 'redux-saga/effects';
+import { push } from 'connected-react-router';
 import { ISignUpFormData, ISignInFormData } from '../types/signUpForm';
 import { IUser } from '../types/user';
-import { EMAIL, LAST_NAME, FIRST_NAME } from '../utils/constant';
+import {
+  EMAIL, LAST_NAME, FIRST_NAME, MAIN_PAGE,
+} from '../utils/constant';
 
 export const moduleName = 'auth';
 export const SIGN_UP_REQUEST = 'Plannera/auth/SIGN_UP_REQUEST';
 export const SIGN_UP_SUCCESS = 'Plannera/auth/SIGN_UP_SUCCESS';
 export const SIGN_UP_ERROR = 'Plannera/auth/SIGN_UP_ERROR';
 export const SIGN_IN_REQUEST = 'Plannera/auth/SIGN_IN_REQUEST';
+export const SIGN_OUT_REQUEST = 'Plannera/auth/SIGN_OUT_REQUEST';
+export const SIGN_OUT_SUCCESS = 'Plannera/auth/SIGN_OUT_SUCCESS';
+export const SIGN_OUT_ERROR = 'Plannera/auth/SIGN_OUT_ERROR';
 
 /**
  * types
@@ -30,12 +36,27 @@ export interface ISignInRequestAction {
   type: typeof SIGN_IN_REQUEST;
   payload: ISignInFormData;
 }
+export interface ISignOutRequestAction {
+  type: typeof SIGN_OUT_REQUEST;
+  payload: null;
+}
+export interface ISignOutSuccessAction {
+  type: typeof SIGN_OUT_SUCCESS;
+  payload: null;
+}
+export interface ISignOutErrorAction {
+  type: typeof SIGN_OUT_ERROR;
+  payload: string;
+}
 
 export type AuthActionTypes =
   | ISignUpRequestAction
   | ISignUpSuccessAction
   | ISignUpErrorAction
-  | ISignInRequestAction;
+  | ISignInRequestAction
+  | ISignOutSuccessAction
+  | ISignOutRequestAction
+  | ISignOutErrorAction;
 
 export interface IReducerInitialState extends IUser {
   error: null | string;
@@ -87,6 +108,8 @@ const reducer = (state = reducerState, action: AuthActionTypes): typeof reducerS
         .set('loading', false)
         .set('error', error);
     }
+    case SIGN_OUT_SUCCESS:
+      return new ReducerRecord();
     default:
       return state;
   }
@@ -111,6 +134,16 @@ export const signUpSuccess = (data: IUser): ISignUpSuccessAction => ({
 export const signIn = (data: ISignInFormData): ISignInRequestAction => ({
   type: SIGN_IN_REQUEST,
   payload: data,
+});
+
+export const signOut = (): ISignOutRequestAction => ({
+  type: SIGN_OUT_REQUEST,
+  payload: null,
+});
+
+export const signOutSuccess = (): ISignOutSuccessAction => ({
+  type: SIGN_OUT_SUCCESS,
+  payload: null,
 });
 
 /**
@@ -139,11 +172,13 @@ export function* registerUser(action: ISignUpRequestAction) {
   };
 
   yield put(signUpSuccess(data));
+
+  yield put(push(MAIN_PAGE));
 }
 
 export function* loginUser(action: ISignInRequestAction) {
   const { payload } = action;
-  const { [EMAIL]: email } = payload;
+  const { [EMAIL]: email, from } = payload;
 
   // login user in firebase get ID
 
@@ -160,8 +195,21 @@ export function* loginUser(action: ISignInRequestAction) {
   };
 
   yield put(signUpSuccess(data));
+
+  yield put(push(from));
+}
+
+export function* logoutUser() {
+  // sign out from firebase
+  yield put(signOutSuccess());
+
+  yield put(push(MAIN_PAGE));
 }
 
 export function* authSaga() {
-  yield all([takeEvery(SIGN_UP_REQUEST, registerUser), takeEvery(SIGN_IN_REQUEST, loginUser)]);
+  yield all([
+    takeEvery(SIGN_UP_REQUEST, registerUser),
+    takeEvery(SIGN_IN_REQUEST, loginUser),
+    takeEvery(SIGN_OUT_REQUEST, logoutUser),
+  ]);
 }

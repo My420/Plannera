@@ -1,16 +1,24 @@
 import React, { useReducer } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { Link } from 'react-router-dom';
 import {
   ISignUpState, IAuthAction, IAuthField, ISignUpFormData,
 } from '../../types/signUpForm';
 import {
-  EMAIL, PASSWORD, CONFIRM, FIRST_NAME, LAST_NAME,
+  EMAIL,
+  PASSWORD,
+  CONFIRM,
+  FIRST_NAME,
+  LAST_NAME,
+  SIGN_IN_PAGE,
 } from '../../utils/constant';
 import validateEmail from '../../utils/validateEmail';
 import validatePassword from '../../utils/validatePassword';
 import validateConfirmField from '../../utils/validateConfirmField';
 import validateNameField from '../../utils/validateNameField';
+import { signUp } from '../../ducks/auth';
+import AppActions from '../../ducks/appActionsType';
 import EmailAuthInput from '../Inputs/EmailAuthInput';
 import PasswordAuthInput from '../Inputs/PasswordAuthInput';
 import ConfirmAuthInput from '../Inputs/ConfirmAuthInput';
@@ -18,8 +26,6 @@ import FirstNameAuthInput from '../Inputs/FirstNameAuthInput';
 import LastNameAuthInput from '../Inputs/LastNameAuthInput';
 import MenuSubmitButton from '../Buttons/MenuSubmitButton';
 import styles from './SignUpForm.module.scss';
-import { signUp } from '../../ducks/auth';
-import AppActions from '../../ducks/appActionsType';
 
 const field: IAuthField = { value: '', isValid: false, error: '' };
 const initialState: ISignUpState = {
@@ -153,9 +159,9 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ onSubmitClick }) => {
           onButtonClick={onSubmit}
           disabled={isSubmitDisabled}
         />
-        <a className={styles.link} href="\signin">
+        <Link className={styles.link} to={SIGN_IN_PAGE}>
           Sign in
-        </a>
+        </Link>
       </fieldset>
     </form>
   );

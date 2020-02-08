@@ -1,18 +1,19 @@
 import React, { useReducer } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { Link } from 'react-router-dom';
 import {
   ISignInState, IAuthAction, IAuthField, ISignInFormData,
 } from '../../types/signUpForm';
-import { EMAIL, PASSWORD } from '../../utils/constant';
+import { EMAIL, PASSWORD, SIGN_UP_PAGE } from '../../utils/constant';
 import validateEmail from '../../utils/validateEmail';
 import validatePassword from '../../utils/validatePassword';
+import AppActions from '../../ducks/appActionsType';
+import { signIn } from '../../ducks/auth';
 import EmailAuthInput from '../Inputs/EmailAuthInput';
 import PasswordAuthInput from '../Inputs/PasswordAuthInput';
 import MenuSubmitButton from '../Buttons/MenuSubmitButton';
 import styles from './SignInForm.module.scss';
-import AppActions from '../../ducks/appActionsType';
-import { signIn } from '../../ducks/auth';
 
 const field: IAuthField = { value: '', isValid: false, error: '' };
 const initialState: ISignInState = {
@@ -47,9 +48,10 @@ const reducer = (state: ISignInState, action: IAuthAction) => {
 
 export interface ISignInFormProps {
   onSubmitClick: (data: ISignInFormData) => void;
+  from: string;
 }
 
-const SignInForm: React.FC<ISignInFormProps> = ({ onSubmitClick }) => {
+const SignInForm: React.FC<ISignInFormProps> = ({ onSubmitClick, from }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const setNewValue = (name: string, value: string): void => {
@@ -62,6 +64,7 @@ const SignInForm: React.FC<ISignInFormProps> = ({ onSubmitClick }) => {
     onSubmitClick({
       [EMAIL]: state[EMAIL].value,
       [PASSWORD]: state[PASSWORD].value,
+      from,
     });
   };
 
@@ -92,9 +95,9 @@ const SignInForm: React.FC<ISignInFormProps> = ({ onSubmitClick }) => {
           onButtonClick={onSubmit}
           disabled={isSubmitDisabled}
         />
-        <a className={styles.link} href="\signup">
+        <Link className={styles.link} to={SIGN_UP_PAGE}>
           Sign up
-        </a>
+        </Link>
       </fieldset>
     </form>
   );

@@ -1,19 +1,23 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { createBrowserHistory } from 'history';
-import { routerMiddleware } from 'connected-react-router';
+import { routerMiddleware, connectRouter } from 'connected-react-router';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import createRootReducer from './reducer';
-import { authSaga } from '../ducks/auth';
+import authReducer, { moduleName as auth, authSaga } from '../ducks/auth';
 
 export const history = createBrowserHistory();
-
 const sagaMiddleware = createSagaMiddleware();
+
 const enhancer = applyMiddleware(routerMiddleware(history), sagaMiddleware);
 const withReduxDevTools = composeWithDevTools(enhancer);
-const reducer = createRootReducer(history);
+const rootReducer = combineReducers({
+  router: connectRouter(history),
+  [auth]: authReducer,
+});
 
-const store = createStore(reducer, withReduxDevTools);
+const store = createStore(rootReducer, withReduxDevTools);
 sagaMiddleware.run(authSaga);
+
+export type AppState = ReturnType<typeof rootReducer>;
 
 export default store;

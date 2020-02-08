@@ -12,6 +12,7 @@ export interface ISignUpFormData {
 export interface ISignInFormData {
   [EMAIL]: string;
   [PASSWORD]: string;
+  from: string;
 }
 
 export interface ISignUpState {
