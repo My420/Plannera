@@ -28,6 +28,9 @@ export const SIGN_OUT_REQUEST = 'Plannera/auth/SIGN_OUT_REQUEST';
 export const SIGN_OUT_SUCCESS = 'Plannera/auth/SIGN_OUT_SUCCESS';
 export const SIGN_OUT_ERROR = 'Plannera/auth/SIGN_OUT_ERROR';
 
+const auth = firebase.auth();
+const usersCollectionRef = firebase.firestore().collection(DB_USER_CATALOG);
+
 /**
  * types
  */
@@ -79,6 +82,10 @@ export type AuthActionTypes =
 export interface IReducerInitialState extends IUser {
   error: null | string;
   loading: boolean;
+}
+
+export interface IAuthChannelAction {
+  uid: string | null;
 }
 
 /**
@@ -189,6 +196,16 @@ export const signOutError = (error: string): ISignOutErrorAction => ({
  *  Saga
  */
 
+const subscribe: Subscribe<IAuthChannelAction> = (emit): Unsubscribe => {
+  firebase.auth().onAuthStateChanged((user) => {
+    const uid = user ? user.uid : user;
+    emit({ uid });
+  });
+  return () => {};
+};
+
+const createAuthChannel = () => eventChannel(subscribe);
+
 export function* registerUser(action: ISignUpRequestAction) {
   const { payload } = action;
   const {
@@ -199,7 +216,6 @@ export function* registerUser(action: ISignUpRequestAction) {
   } = payload;
 
   try {
-    const auth = firebase.auth();
     const response: firebase.auth.UserCredential = yield call(
       [auth, auth.createUserWithEmailAndPassword],
       email,
@@ -208,10 +224,7 @@ export function* registerUser(action: ISignUpRequestAction) {
 
     if (response.user) {
       const userID = response.user.uid;
-      const userDocRef = firebase
-        .firestore()
-        .collection(DB_USER_CATALOG)
-        .doc(userID);
+      const userDocRef = usersCollectionRef.doc(userID);
       const initial = (firstName[0] + lastName[0]).toUpperCase();
       const userData: IUser = {
         email,
@@ -223,8 +236,6 @@ export function* registerUser(action: ISignUpRequestAction) {
       yield call([userDocRef, userDocRef.set], userData);
     }
   } catch (error) {
-    // handle error
-    console.log(error);
     const { message } = error as Error;
     yield put(signUpError(message));
   }
@@ -232,16 +243,10 @@ export function* registerUser(action: ISignUpRequestAction) {
 
 export function* loginUser(action: ISignInRequestAction) {
   const { payload } = action;
-  const { [EMAIL]: email, [PASSWORD]: password, from } = payload;
-
-  // login user in firebase get ID
+  const { [EMAIL]: email, [PASSWORD]: password } = payload;
   try {
-    const auth = firebase.auth();
     yield call([auth, auth.signInWithEmailAndPassword], email, password);
-    yield put(push(from));
   } catch (error) {
-    // handle error
-    console.log(error);
     const { message } = error as Error;
     yield put(signInError(message));
   }
@@ -249,35 +254,20 @@ export function* loginUser(action: ISignInRequestAction) {
 
 export function* logoutUser() {
   try {
-    const auth = firebase.auth();
-
     yield call([auth, auth.signOut]);
-
     yield put(signOutSuccess());
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    const { message } = error as Error;
+    yield put(signOutError(message));
   }
 }
-
-const subscribe: Subscribe<firebase.User | null> = (emit): Unsubscribe => {
-  firebase.auth().onAuthStateChanged((user) => {
-    emit(user);
-  });
-  return () => {};
-};
-
-const createAuthChannel = () => eventChannel(subscribe);
 
 export function* watchAuthStatusChange() {
   const authChan: EventChannel<firebase.User | null> = yield call(createAuthChannel);
   while (true) {
-    const user: firebase.User | null = yield take(authChan);
-    if (user) {
-      const { uid } = user;
-      const userDocRef = firebase
-        .firestore()
-        .collection(DB_USER_CATALOG)
-        .doc(uid);
+    const { uid }: IAuthChannelAction = yield take(authChan);
+    if (uid) {
+      const userDocRef = usersCollectionRef.doc(uid);
       const doc: firebase.firestore.DocumentSnapshot = yield call([userDocRef, userDocRef.get]);
       if (doc.exists) {
         const data = doc.data();
