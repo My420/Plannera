@@ -17,7 +17,7 @@ import validateEmail from '../../utils/validateEmail';
 import validatePassword from '../../utils/validatePassword';
 import validateConfirmField from '../../utils/validateConfirmField';
 import validateNameField from '../../utils/validateNameField';
-import { signUp } from '../../ducks/auth';
+import { signUp } from '../../ducks/auth/actionCreator';
 import AppActions from '../../ducks/appActionsType';
 import EmailAuthInput from '../Inputs/EmailAuthInput';
 import PasswordAuthInput from '../Inputs/PasswordAuthInput';

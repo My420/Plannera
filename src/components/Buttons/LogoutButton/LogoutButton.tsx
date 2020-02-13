@@ -1,6 +1,8 @@
 import React from 'react';
+import { Dispatch } from 'redux';
 import { useDispatch } from 'react-redux';
-import { signOut } from '../../../ducks/auth';
+import AppActions from '../../../ducks/appActionsType';
+import { signOut } from '../../../ducks/auth/actionCreator';
 import styles from './LogoutButton.module.scss';
 
 export interface LogoutButtonProps {
@@ -8,7 +10,7 @@ export interface LogoutButtonProps {
 }
 
 const LogoutButton: React.FC<LogoutButtonProps> = ({ extensionClass, ...rest }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<Dispatch<AppActions>>();
   const onButtonClick = () => dispatch(signOut());
 
   return (
