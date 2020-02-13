@@ -1,0 +1,65 @@
+import { ISignUpFormData, ISignInFormData } from '../../types/signUpForm';
+import { IUser } from '../../types/user';
+import {
+  SIGN_UP_REQUEST,
+  SIGN_UP_ERROR,
+  SIGN_IN_REQUEST,
+  SIGN_IN_SUCCESS,
+  SIGN_IN_ERROR,
+  SIGN_OUT_REQUEST,
+  SIGN_OUT_SUCCESS,
+  SIGN_OUT_ERROR,
+} from './constant';
+
+export interface ISignUpRequestAction {
+  type: typeof SIGN_UP_REQUEST;
+  payload: ISignUpFormData;
+}
+export interface ISignUpErrorAction {
+  type: typeof SIGN_UP_ERROR;
+  payload: string;
+}
+export interface ISignInRequestAction {
+  type: typeof SIGN_IN_REQUEST;
+  payload: ISignInFormData;
+}
+export interface ISignInSuccessAction {
+  type: typeof SIGN_IN_SUCCESS;
+  payload: IUser;
+}
+
+export interface ISignInErrorAction {
+  type: typeof SIGN_IN_ERROR;
+  payload: string;
+}
+export interface ISignOutRequestAction {
+  type: typeof SIGN_OUT_REQUEST;
+  payload: null;
+}
+export interface ISignOutSuccessAction {
+  type: typeof SIGN_OUT_SUCCESS;
+  payload: null;
+}
+export interface ISignOutErrorAction {
+  type: typeof SIGN_OUT_ERROR;
+  payload: string;
+}
+
+export type AuthActionTypes =
+  | ISignUpRequestAction
+  | ISignUpErrorAction
+  | ISignInRequestAction
+  | ISignInSuccessAction
+  | ISignInErrorAction
+  | ISignOutSuccessAction
+  | ISignOutRequestAction
+  | ISignOutErrorAction;
+
+export interface IReducerInitialState extends IUser {
+  error: null | string;
+  loading: boolean;
+}
+
+export interface IAuthChannelAction {
+  uid: string | null;
+}

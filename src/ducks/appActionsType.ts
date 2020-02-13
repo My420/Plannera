@@ -1,4 +1,4 @@
-import { AuthActionTypes } from './auth';
+import { AuthActionTypes } from './auth/types';
 
 type AppActions = AuthActionTypes;
 
