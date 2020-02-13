@@ -1,10 +1,8 @@
 import React, { useReducer } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Link } from 'react-router-dom';
-import {
-  ISignUpState, IAuthAction, IAuthField, ISignUpFormData,
-} from '../../types/signUpForm';
+import { IAuthAction } from '../../types/signUpForm';
 import {
   EMAIL,
   PASSWORD,
@@ -13,10 +11,7 @@ import {
   LAST_NAME,
   SIGN_IN_PAGE,
 } from '../../utils/constant';
-import validateEmail from '../../utils/validateEmail';
-import validatePassword from '../../utils/validatePassword';
-import validateConfirmField from '../../utils/validateConfirmField';
-import validateNameField from '../../utils/validateNameField';
+import reducer, { initialState } from './reducer';
 import { signUp } from '../../ducks/auth/actionCreator';
 import AppActions from '../../ducks/appActionsType';
 import EmailAuthInput from '../Inputs/EmailAuthInput';
@@ -27,65 +22,11 @@ import LastNameAuthInput from '../Inputs/LastNameAuthInput';
 import MenuSubmitButton from '../Buttons/MenuSubmitButton';
 import styles from './SignUpForm.module.scss';
 
-const field: IAuthField = { value: '', isValid: false, error: '' };
-const initialState: ISignUpState = {
-  [EMAIL]: { ...field },
-  [PASSWORD]: { ...field },
-  [CONFIRM]: { ...field },
-  [FIRST_NAME]: { ...field },
-  [LAST_NAME]: { ...field },
-};
+export interface ISignUpFormProps {}
 
-const reducer = (state: ISignUpState, action: IAuthAction) => {
-  const {
-    type,
-    payload: { value },
-  } = action;
-
-  const newState = (isValid: boolean, error: string): ISignUpState => ({
-    ...state,
-    [type]: { value, isValid, error },
-  });
-
-  switch (type) {
-    case EMAIL: {
-      const { isValid, error } = validateEmail(value);
-      return newState(isValid, error);
-    }
-    case PASSWORD: {
-      const passwordStatus = validatePassword(value);
-      const confirmStatus = validateConfirmField(state[CONFIRM].value, value);
-      if (!passwordStatus.isValid || (passwordStatus.isValid && confirmStatus.isValid)) {
-        return newState(passwordStatus.isValid, passwordStatus.error);
-      }
-      return {
-        ...newState(passwordStatus.isValid, passwordStatus.error),
-        [CONFIRM]: { ...state[CONFIRM], ...confirmStatus },
-      };
-    }
-    case CONFIRM: {
-      const { isValid, error } = validateConfirmField(value, state[PASSWORD].value);
-      return newState(isValid, error);
-    }
-    case FIRST_NAME: {
-      const { isValid, error } = validateNameField(value);
-      return newState(isValid, error);
-    }
-    case LAST_NAME: {
-      const { isValid, error } = validateNameField(value);
-      return newState(isValid, error);
-    }
-    default:
-      return state;
-  }
-};
-
-export interface ISignUpFormProps {
-  onSubmitClick: (data: ISignUpFormData) => void;
-}
-
-const SignUpForm: React.FC<ISignUpFormProps> = ({ onSubmitClick }) => {
+const SignUpForm: React.FC<ISignUpFormProps> = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const reduxDispatch = useDispatch<Dispatch<AppActions>>();
 
   const setNewValue = (name: string, value: string): void => {
     const action: IAuthAction = { type: name, payload: { value } };
@@ -94,12 +35,14 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ onSubmitClick }) => {
 
   const onSubmit = (evt: React.MouseEvent<HTMLButtonElement>): void => {
     evt.preventDefault();
-    onSubmitClick({
-      [EMAIL]: state[EMAIL].value,
-      [PASSWORD]: state[PASSWORD].value,
-      [FIRST_NAME]: state[FIRST_NAME].value,
-      [LAST_NAME]: state[LAST_NAME].value,
-    });
+    reduxDispatch(
+      signUp({
+        [EMAIL]: state[EMAIL].value,
+        [PASSWORD]: state[PASSWORD].value,
+        [FIRST_NAME]: state[FIRST_NAME].value,
+        [LAST_NAME]: state[LAST_NAME].value,
+      }),
+    );
   };
 
   const isSubmitDisabled: boolean = !(
@@ -167,8 +110,4 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ onSubmitClick }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<AppActions>) => ({
-  onSubmitClick: (data: ISignUpFormData) => dispatch(signUp(data)),
-});
-
-export default connect(null, mapDispatchToProps)(SignUpForm);
+export default SignUpForm;
