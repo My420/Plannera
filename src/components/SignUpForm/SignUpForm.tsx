@@ -21,6 +21,7 @@ import FirstNameAuthInput from '../Inputs/FirstNameAuthInput';
 import LastNameAuthInput from '../Inputs/LastNameAuthInput';
 import MenuSubmitButton from '../Buttons/MenuSubmitButton';
 import styles from './SignUpForm.module.scss';
+import AuthRequestBar from '../RequestStatusBar/AuthRequestBar';
 
 export interface ISignUpFormProps {}
 
@@ -56,6 +57,9 @@ const SignUpForm: React.FC<ISignUpFormProps> = () => {
   return (
     <form className={styles.form} name="signUpForm" action="signup.php">
       <p className={styles.title}>Create account</p>
+      <div className={styles.status}>
+        <AuthRequestBar />
+      </div>
       <fieldset className={styles.signup}>
         <EmailAuthInput
           extensionContainerClass={styles.input}

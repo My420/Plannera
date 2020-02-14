@@ -3,6 +3,16 @@
 
 .form {
   @include auth-form;
+  position: relative;
+}
+
+.status {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 20px;
 }
 
 .title {
@@ -48,9 +58,5 @@
   .signin,
   .controls {
     width: 280px;
-  }
-
-  .title {
-    margin-bottom: 0px;
   }
 }

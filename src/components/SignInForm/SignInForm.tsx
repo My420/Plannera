@@ -10,6 +10,7 @@ import reducer, { initialState } from './reducer';
 import EmailAuthInput from '../Inputs/EmailAuthInput';
 import PasswordAuthInput from '../Inputs/PasswordAuthInput';
 import MenuSubmitButton from '../Buttons/MenuSubmitButton';
+import AuthRequestBar from '../RequestStatusBar/AuthRequestBar';
 import styles from './SignInForm.module.scss';
 
 export interface ISignInFormProps {
@@ -40,6 +41,9 @@ const SignInForm: React.FC<ISignInFormProps> = ({ from }) => {
   return (
     <form className={styles.form} name="signInForm" action="signin.php">
       <p className={styles.title}>Sign in</p>
+      <div className={styles.status}>
+        <AuthRequestBar />
+      </div>
       <fieldset className={styles.signin}>
         <EmailAuthInput
           extensionContainerClass={styles.input}
