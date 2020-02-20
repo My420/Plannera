@@ -1,5 +1,4 @@
 import { ISignUpFormData, ISignInFormData } from '../../types/signUpForm';
-import { IUser } from '../../types/user';
 import {
   SIGN_UP_REQUEST,
   SIGN_UP_ERROR,
@@ -10,6 +9,11 @@ import {
   SIGN_OUT_SUCCESS,
   SIGN_OUT_ERROR,
 } from './constant';
+
+export interface IAuthData {
+  userID: null | string;
+  email: null | string;
+}
 
 export interface ISignUpRequestAction {
   type: typeof SIGN_UP_REQUEST;
@@ -25,7 +29,7 @@ export interface ISignInRequestAction {
 }
 export interface ISignInSuccessAction {
   type: typeof SIGN_IN_SUCCESS;
-  payload: IUser;
+  payload: IAuthData;
 }
 
 export interface ISignInErrorAction {
@@ -55,11 +59,12 @@ export type AuthActionTypes =
   | ISignOutRequestAction
   | ISignOutErrorAction;
 
-export interface IReducerInitialState extends IUser {
+export interface IReducerInitialState extends IAuthData {
   error: null | string;
   loading: boolean;
 }
 
 export interface IAuthChannelAction {
   uid: string | null;
+  email: string | null;
 }

@@ -13,9 +13,6 @@ import {
 const initialState: IReducerInitialState = {
   userID: null,
   email: null,
-  firstName: null,
-  lastName: null,
-  initial: null,
   error: null,
   loading: false,
 };
@@ -29,15 +26,10 @@ const reducer = (state = reducerState, action: AuthActionTypes): typeof reducerS
     case SIGN_UP_REQUEST:
       return state.set('loading', true).set('error', null);
     case SIGN_IN_SUCCESS: {
-      const {
-        userID, email, lastName, firstName, initial,
-      } = action.payload;
+      const { userID, email } = action.payload;
       return state
         .set('userID', userID)
         .set('email', email)
-        .set('firstName', firstName)
-        .set('lastName', lastName)
-        .set('initial', initial)
         .set('loading', false)
         .set('error', null);
     }
@@ -47,9 +39,6 @@ const reducer = (state = reducerState, action: AuthActionTypes): typeof reducerS
       return state
         .set('userID', null)
         .set('email', null)
-        .set('firstName', null)
-        .set('lastName', null)
-        .set('initial', null)
         .set('loading', false)
         .set('error', error);
     }

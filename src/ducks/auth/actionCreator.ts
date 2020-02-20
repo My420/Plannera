@@ -1,4 +1,3 @@
-import { IUser } from '../../types/user';
 import { ISignUpFormData, ISignInFormData } from '../../types/signUpForm';
 import {
   ISignUpRequestAction,
@@ -9,6 +8,7 @@ import {
   ISignOutRequestAction,
   ISignOutSuccessAction,
   ISignOutErrorAction,
+  IAuthData,
 } from './types';
 import {
   SIGN_UP_REQUEST,
@@ -36,7 +36,7 @@ export const signIn = (data: ISignInFormData): ISignInRequestAction => ({
   payload: data,
 });
 
-export const signInSuccess = (data: IUser): ISignInSuccessAction => ({
+export const signInSuccess = (data: IAuthData): ISignInSuccessAction => ({
   type: SIGN_IN_SUCCESS,
   payload: data,
 });
