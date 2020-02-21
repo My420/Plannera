@@ -8,7 +8,9 @@ import { IAuthChannelAction, ISignUpRequestAction, ISignInRequestAction } from '
 import {
   auth, SIGN_OUT_REQUEST, SIGN_IN_REQUEST, SIGN_UP_REQUEST,
 } from './constant';
-import { EMAIL, MAIN_PAGE, PASSWORD } from '../../utils/constant';
+import {
+  EMAIL, MAIN_PAGE, PASSWORD, LAST_NAME, FIRST_NAME,
+} from '../../utils/constant';
 import {
   signInError,
   signUpError,
@@ -16,6 +18,7 @@ import {
   signOutError,
   signInSuccess,
 } from './actionCreator';
+import { createUser, loadUser, clearUserState } from '../user/actionCreator';
 
 const subscribe: Subscribe<IAuthChannelAction> = (emit): Unsubscribe => {
   auth.onAuthStateChanged((user) => {
@@ -30,10 +33,31 @@ const createAuthChannel = () => eventChannel(subscribe);
 
 export function* registerUser(action: ISignUpRequestAction) {
   const { payload } = action;
-  const { [EMAIL]: email, [PASSWORD]: password } = payload;
+  const {
+    [EMAIL]: email,
+    [PASSWORD]: password,
+    [LAST_NAME]: lastName,
+    [FIRST_NAME]: firstName,
+  } = payload;
 
   try {
-    yield call([auth, auth.createUserWithEmailAndPassword], email, password);
+    const response: firebase.auth.UserCredential = yield call(
+      [auth, auth.createUserWithEmailAndPassword],
+      email,
+      password,
+    );
+
+    if (response.user) {
+      const userID = response.user.uid;
+      yield put(
+        createUser({
+          userID,
+          email,
+          firstName,
+          lastName,
+        }),
+      );
+    }
   } catch (error) {
     const { message } = error as Error;
     yield put(signUpError(message));
@@ -71,9 +95,11 @@ export function* watchAuthStatusChange() {
           email,
         }),
       );
+      yield put(loadUser(uid));
       yield put(push(MAIN_PAGE));
     } else {
       yield put(signOutSuccess());
+      yield put(clearUserState());
     }
   }
 }
