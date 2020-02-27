@@ -8,6 +8,7 @@ import {
   SIGN_IN_ERROR,
   SIGN_OUT_SUCCESS,
   SIGN_OUT_ERROR,
+  AUTH_CLEAR_ERROR,
 } from './constant';
 
 const initialState: IReducerInitialState = {
@@ -48,6 +49,8 @@ const reducer = (state = reducerState, action: AuthActionTypes): typeof reducerS
       const { payload } = action;
       return state.set('error', payload);
     }
+    case AUTH_CLEAR_ERROR:
+      return state.set('error', null);
     default:
       return state;
   }

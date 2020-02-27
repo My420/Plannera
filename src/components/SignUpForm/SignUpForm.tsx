@@ -12,7 +12,7 @@ import {
   SIGN_IN_PAGE,
 } from '../../utils/constant';
 import reducer, { initialState } from './reducer';
-import { signUp } from '../../ducks/auth/actionCreator';
+import { signUp, clearAuthError } from '../../ducks/auth/actionCreator';
 import AppActions from '../../ducks/appActionsType';
 import EmailAuthInput from '../Inputs/EmailAuthInput';
 import PasswordAuthInput from '../Inputs/PasswordAuthInput';
@@ -44,6 +44,10 @@ const SignUpForm: React.FC<ISignUpFormProps> = () => {
         [LAST_NAME]: state[LAST_NAME].value,
       }),
     );
+  };
+
+  const clearError = (): void => {
+    reduxDispatch(clearAuthError());
   };
 
   const isSubmitDisabled: boolean = !(
@@ -106,7 +110,7 @@ const SignUpForm: React.FC<ISignUpFormProps> = () => {
           onButtonClick={onSubmit}
           disabled={isSubmitDisabled}
         />
-        <Link className={styles.link} to={SIGN_IN_PAGE}>
+        <Link className={styles.link} to={SIGN_IN_PAGE} onClick={clearError}>
           Sign in
         </Link>
       </fieldset>

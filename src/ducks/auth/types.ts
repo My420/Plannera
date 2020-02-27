@@ -8,6 +8,7 @@ import {
   SIGN_OUT_REQUEST,
   SIGN_OUT_SUCCESS,
   SIGN_OUT_ERROR,
+  AUTH_CLEAR_ERROR,
 } from './constant';
 
 export interface IAuthData {
@@ -49,6 +50,11 @@ export interface ISignOutErrorAction {
   payload: string;
 }
 
+export interface IAuthClearErrorAction {
+  type: typeof AUTH_CLEAR_ERROR;
+  payload: null;
+}
+
 export type AuthActionTypes =
   | ISignUpRequestAction
   | ISignUpErrorAction
@@ -57,7 +63,8 @@ export type AuthActionTypes =
   | ISignInErrorAction
   | ISignOutSuccessAction
   | ISignOutRequestAction
-  | ISignOutErrorAction;
+  | ISignOutErrorAction
+  | IAuthClearErrorAction;
 
 export interface IReducerInitialState extends IAuthData {
   error: null | string;

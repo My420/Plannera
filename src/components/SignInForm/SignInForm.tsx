@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { IAuthAction } from '../../types/signUpForm';
 import { EMAIL, PASSWORD, SIGN_UP_PAGE } from '../../utils/constant';
 import AppActions from '../../ducks/appActionsType';
-import { signIn } from '../../ducks/auth/actionCreator';
+import { signIn, clearAuthError } from '../../ducks/auth/actionCreator';
 import reducer, { initialState } from './reducer';
 import EmailAuthInput from '../Inputs/EmailAuthInput';
 import PasswordAuthInput from '../Inputs/PasswordAuthInput';
@@ -35,6 +35,10 @@ const SignInForm: React.FC<ISignInFormProps> = ({ from }) => {
         from,
       }),
     );
+  };
+
+  const clearError = (): void => {
+    reduxDispatch(clearAuthError());
   };
 
   const isSubmitDisabled: boolean = !(state[EMAIL].isValid && state[PASSWORD].isValid);
@@ -67,7 +71,7 @@ const SignInForm: React.FC<ISignInFormProps> = ({ from }) => {
           onButtonClick={onSubmit}
           disabled={isSubmitDisabled}
         />
-        <Link className={styles.link} to={SIGN_UP_PAGE}>
+        <Link className={styles.link} to={SIGN_UP_PAGE} onClick={clearError}>
           Sign up
         </Link>
       </fieldset>

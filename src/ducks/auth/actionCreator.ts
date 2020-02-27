@@ -9,6 +9,7 @@ import {
   ISignOutSuccessAction,
   ISignOutErrorAction,
   IAuthData,
+  IAuthClearErrorAction,
 } from './types';
 import {
   SIGN_UP_REQUEST,
@@ -19,6 +20,7 @@ import {
   SIGN_OUT_REQUEST,
   SIGN_OUT_SUCCESS,
   SIGN_OUT_ERROR,
+  AUTH_CLEAR_ERROR,
 } from './constant';
 
 export const signUp = (data: ISignUpFormData): ISignUpRequestAction => ({
@@ -59,4 +61,9 @@ export const signOutSuccess = (): ISignOutSuccessAction => ({
 export const signOutError = (error: string): ISignOutErrorAction => ({
   type: SIGN_OUT_ERROR,
   payload: error,
+});
+
+export const clearAuthError = (): IAuthClearErrorAction => ({
+  type: AUTH_CLEAR_ERROR,
+  payload: null,
 });
