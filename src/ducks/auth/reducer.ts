@@ -18,8 +18,8 @@ const initialState: IReducerInitialState = {
   loading: false,
 };
 
-const ReducerRecord = Record(initialState);
-const reducerState = new ReducerRecord();
+export const ReducerRecord = Record(initialState);
+export const reducerState = new ReducerRecord();
 
 const reducer = (state = reducerState, action: AuthActionTypes): typeof reducerState => {
   switch (action.type) {
