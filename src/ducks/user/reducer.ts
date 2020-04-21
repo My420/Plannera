@@ -22,8 +22,8 @@ const initialState: IReducerInitialState = {
   loading: false,
 };
 
-const ReducerRecord = Record(initialState);
-const reducerState = new ReducerRecord();
+export const ReducerRecord = Record(initialState);
+export const reducerState = new ReducerRecord();
 
 const reducer = (state = reducerState, action: UserActionTypes): typeof reducerState => {
   switch (action.type) {
@@ -59,7 +59,7 @@ const reducer = (state = reducerState, action: UserActionTypes): typeof reducerS
     }
     case CHANGE_USER_DATA_ERROR: {
       const { payload } = action;
-      return state.set('error', payload);
+      return state.set('error', payload).set('loading', false);
     }
     case CLEAR_USER_STATE:
       return new ReducerRecord();
