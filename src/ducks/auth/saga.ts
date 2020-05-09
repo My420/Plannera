@@ -5,9 +5,7 @@ import {
 } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import { IAuthChannelAction, ISignUpRequestAction, ISignInRequestAction } from './types';
-import {
-  auth, SIGN_OUT_REQUEST, SIGN_IN_REQUEST, SIGN_UP_REQUEST,
-} from './constant';
+import { SIGN_OUT_REQUEST, SIGN_IN_REQUEST, SIGN_UP_REQUEST } from './constant';
 import {
   EMAIL, MAIN_PAGE, PASSWORD, LAST_NAME, FIRST_NAME,
 } from '../../utils/constant';
@@ -19,17 +17,14 @@ import {
   signInSuccess,
 } from './actionCreator';
 import { createUser, loadUser, clearUserState } from '../user/actionCreator';
+import authServices from '../../services/auth';
 
 const subscribe: Subscribe<IAuthChannelAction> = (emit): Unsubscribe => {
-  auth.onAuthStateChanged((user) => {
-    const uid = user ? user.uid : user;
-    const email = user ? user.email : user;
-    emit({ uid, email });
-  });
+  authServices.onStateChange(emit);
   return () => {};
 };
 
-const createAuthChannel = () => eventChannel(subscribe);
+export const createAuthChannel = () => eventChannel(subscribe);
 
 export function* registerUser(action: ISignUpRequestAction) {
   const { payload } = action;
@@ -41,23 +36,15 @@ export function* registerUser(action: ISignUpRequestAction) {
   } = payload;
 
   try {
-    const response: firebase.auth.UserCredential = yield call(
-      [auth, auth.createUserWithEmailAndPassword],
-      email,
-      password,
+    const userID: string = yield call([authServices, authServices.signUpUser], email, password);
+    yield put(
+      createUser({
+        userID,
+        email,
+        firstName,
+        lastName,
+      }),
     );
-
-    if (response.user) {
-      const userID = response.user.uid;
-      yield put(
-        createUser({
-          userID,
-          email,
-          firstName,
-          lastName,
-        }),
-      );
-    }
   } catch (error) {
     const { message } = error as Error;
     yield put(signUpError(message));
@@ -68,7 +55,7 @@ export function* loginUser(action: ISignInRequestAction) {
   const { payload } = action;
   const { [EMAIL]: email, [PASSWORD]: password } = payload;
   try {
-    yield call([auth, auth.signInWithEmailAndPassword], email, password);
+    yield call([authServices, authServices.signInUser], email, password);
   } catch (error) {
     const { message } = error as Error;
     yield put(signInError(message));
@@ -77,7 +64,7 @@ export function* loginUser(action: ISignInRequestAction) {
 
 export function* logoutUser() {
   try {
-    yield call([auth, auth.signOut]);
+    yield call([authServices, authServices.signOutUser]);
   } catch (error) {
     const { message } = error as Error;
     yield put(signOutError(message));
@@ -85,7 +72,7 @@ export function* logoutUser() {
 }
 
 export function* watchAuthStatusChange() {
-  const authChan: EventChannel<firebase.User | null> = yield call(createAuthChannel);
+  const authChan: EventChannel<IAuthChannelAction> = yield call(createAuthChannel);
   while (true) {
     const { uid, email }: IAuthChannelAction = yield take(authChan);
     if (uid) {
@@ -109,6 +96,6 @@ export default function* authSaga() {
     takeEvery(SIGN_UP_REQUEST, registerUser),
     takeEvery(SIGN_IN_REQUEST, loginUser),
     takeEvery(SIGN_OUT_REQUEST, logoutUser),
-    watchAuthStatusChange(),
+    call(watchAuthStatusChange),
   ]);
 }

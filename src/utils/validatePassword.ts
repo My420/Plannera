@@ -4,7 +4,7 @@ export interface IValidatePassword {
   (value: string): IFieldValidator;
 }
 
-export const PASSWORD_MIN_LENGTH = 5;
+export const PASSWORD_MIN_LENGTH = 6;
 export const PASSWORD_MAX_LENGTH = 20;
 
 export const ERROR: IErrorConstant = {
