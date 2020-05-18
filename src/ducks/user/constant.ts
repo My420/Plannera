@@ -1,6 +1,3 @@
-import { fb as firebase } from '../../firebase/config';
-import { DB_USER_CATALOG } from '../../utils/constant';
-
 export const moduleName = 'user';
 export const CREATE_USER_REQUEST = 'Plannera/user/CREATE_USER_REQUEST';
 export const CREATE_USER_SUCCESS = 'Plannera/user/CREATE_USER_SUCCESS';
@@ -15,5 +12,3 @@ export const CHANGE_USER_DATA_SUCCESS = 'Plannera/user/CHANGE_USER_DATA_SUCCESS'
 export const CHANGE_USER_DATA_ERROR = 'Plannera/user/CHANGE_USER_DATA_ERROR';
 
 export const CLEAR_USER_STATE = 'Plannera/user/CLEAR_USER_STATE';
-
-export const usersCollectionRef = firebase.firestore().collection(DB_USER_CATALOG);

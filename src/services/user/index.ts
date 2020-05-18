@@ -1,5 +1,6 @@
 import { fb as firebase } from '../../firebase/config';
 import { IUser } from '../../ducks/user/types';
+import isUserData from '../../typeGuards/isUserData';
 
 class UserService {
   private USERS_CATALOG_NAME = 'users';
@@ -15,19 +16,10 @@ class UserService {
     const doc = await this.usersCollectionRef.doc(userID).get();
     if (doc.exists) {
       const data = doc.data();
-      if (data) {
-        const {
-          email, lastName, firstName, userID: id, initial,
-        } = data as IUser;
-        return {
-          email,
-          lastName,
-          firstName,
-          userID: id,
-          initial,
-        };
+      if (isUserData(data)) {
+        return data;
       }
-      throw new Error(`Document ${userID} in users collection not exist!`);
+      throw new Error(`Date retrieved from ${userID} document is not valid UserData!`);
     } else {
       throw new Error(`Document ${userID} in users collection not exist!`);
     }
