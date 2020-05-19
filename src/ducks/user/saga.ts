@@ -13,7 +13,7 @@ export function* createUser(action: ICreateUserRequestAction) {
     userID, email, lastName, firstName,
   } = payload;
   try {
-    const initial = createInitial(firstName, lastName);
+    const initial: string = yield call(createInitial, firstName, lastName);
     const userData: IUser = {
       email,
       firstName,
