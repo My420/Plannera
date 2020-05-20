@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test MenuSubmitButton component should match snapshot 1`] = `
+<button
+  className="button "
+  data-test="test"
+  name="testBtn"
+  onClick={[MockFunction]}
+  type="submit"
+>
+  Text Button
+</button>
+`;
