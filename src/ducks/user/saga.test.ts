@@ -54,7 +54,7 @@ describe('test User saga', () => {
         };
 
         const actual = gen.next(initial).value;
-        const expected = call([userService, userService.createUser], userData);
+        const expected = call(userService.createUser, userData);
 
         expect(actual).toEqual(expected);
         expect(gen.next().done).toBeTruthy();
@@ -97,7 +97,7 @@ describe('test User saga', () => {
         };
 
         const actual = gen.next(initial).value;
-        const expected = call([userService, userService.createUser], userData);
+        const expected = call(userService.createUser, userData);
 
         expect(actual).toEqual(expected);
       });
@@ -137,7 +137,7 @@ describe('test User saga', () => {
         const gen = loadUserSaga(action);
 
         const actual = gen.next().value;
-        const expected = call([userService, userService.loadUser], userID);
+        const expected = call(userService.loadUser, userID);
 
         expect(actual).toEqual(expected);
       });
@@ -171,7 +171,7 @@ describe('test User saga', () => {
         const gen = loadUserSaga(action);
 
         const actual = gen.next().value;
-        const expected = call([userService, userService.loadUser], userID);
+        const expected = call(userService.loadUser, userID);
 
         expect(actual).toEqual(expected);
       });

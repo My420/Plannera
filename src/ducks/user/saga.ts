@@ -21,7 +21,7 @@ export function* createUser(action: ICreateUserRequestAction) {
       initial,
       userID,
     };
-    yield call([userService, userService.createUser], userData);
+    yield call(userService.createUser, userData);
   } catch (error) {
     const { message } = error as Error;
     yield put(createUserError(message));
@@ -32,7 +32,7 @@ export function* loadUser(action: ILoadUserRequestAction) {
   const { payload } = action;
   const { userID } = payload;
   try {
-    const data: IUser = yield call([userService, userService.loadUser], userID);
+    const data: IUser = yield call(userService.loadUser, userID);
     yield put(loadUserSuccess(data));
   } catch (error) {
     const { message } = error as Error;
