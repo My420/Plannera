@@ -40,7 +40,7 @@ describe('test Auth saga', () => {
       const gen = loginUser(action);
 
       const actual = gen.next().value;
-      const expected = call([auth, auth.signInUser], data[EMAIL], data[PASSWORD]);
+      const expected = call(auth.signInUser, data[EMAIL], data[PASSWORD]);
 
       expect(actual).toEqual(expected);
       expect(gen.next().done).toBeTruthy();
@@ -66,7 +66,7 @@ describe('test Auth saga', () => {
     test('should correct call auth.signOutUser method', () => {
       const gen = logoutUser();
       const actual = gen.next().value;
-      const expected = call([auth, auth.signOutUser]);
+      const expected = call(auth.signOutUser);
       expect(actual).toEqual(expected);
       expect(gen.next().done).toBeTruthy();
     });
@@ -93,7 +93,7 @@ describe('test Auth saga', () => {
       const gen = registerUser(action);
 
       const actual = gen.next().value;
-      const expected = call([auth, auth.signUpUser], data[EMAIL], data[PASSWORD]);
+      const expected = call(auth.signUpUser, data[EMAIL], data[PASSWORD]);
 
       expect(actual).toEqual(expected);
     });

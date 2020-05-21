@@ -6,36 +6,34 @@ interface emitFunc {
   (input: IAuthChannelAction | END): void;
 }
 
-class AuthService {
-  private auth = firebase.auth();
+const auth = firebase.auth();
 
-  async signUpUser(email: string, password: string) {
-    const response = await this.auth.createUserWithEmailAndPassword(email, password);
+const signUpUser = async (email: string, password: string): Promise<string> => {
+  const response = await auth.createUserWithEmailAndPassword(email, password);
 
-    if (response.user) {
-      const userID = response.user.uid;
-      return userID;
-    }
-    throw new Error('Create user error: response.user === null');
+  if (response.user) {
+    const userID = response.user.uid;
+    return userID;
   }
+  throw new Error('Create user error: response.user === null');
+};
 
-  signInUser(email: string, password: string): Promise<firebase.auth.UserCredential> {
-    return this.auth.signInWithEmailAndPassword(email, password);
-  }
+// eslint-disable-next-line max-len
+const signInUser = (email: string, password: string): Promise<firebase.auth.UserCredential> => auth.signInWithEmailAndPassword(email, password);
 
-  signOutUser(): Promise<void> {
-    return this.auth.signOut();
-  }
+const signOutUser = (): Promise<void> => auth.signOut();
 
-  onStateChange(emit: emitFunc) {
-    this.auth.onAuthStateChanged((user) => {
-      const uid = user ? user.uid : user;
-      const email = user ? user.email : user;
-      emit({ uid, email });
-    });
-  }
-}
+const onStateChange = (emit: emitFunc): void => {
+  auth.onAuthStateChanged((user) => {
+    const uid = user ? user.uid : user;
+    const email = user ? user.email : user;
+    emit({ uid, email });
+  });
+};
 
-const service = new AuthService();
-
-export default service;
+export default {
+  signUpUser,
+  signInUser,
+  signOutUser,
+  onStateChange,
+};

@@ -36,7 +36,7 @@ export function* registerUser(action: ISignUpRequestAction) {
   } = payload;
 
   try {
-    const userID: string = yield call([authServices, authServices.signUpUser], email, password);
+    const userID: string = yield call(authServices.signUpUser, email, password);
     yield put(
       createUser({
         userID,
@@ -55,7 +55,7 @@ export function* loginUser(action: ISignInRequestAction) {
   const { payload } = action;
   const { [EMAIL]: email, [PASSWORD]: password } = payload;
   try {
-    yield call([authServices, authServices.signInUser], email, password);
+    yield call(authServices.signInUser, email, password);
   } catch (error) {
     const { message } = error as Error;
     yield put(signInError(message));
@@ -64,7 +64,7 @@ export function* loginUser(action: ISignInRequestAction) {
 
 export function* logoutUser() {
   try {
-    yield call([authServices, authServices.signOutUser]);
+    yield call(authServices.signOutUser);
   } catch (error) {
     const { message } = error as Error;
     yield put(signOutError(message));
