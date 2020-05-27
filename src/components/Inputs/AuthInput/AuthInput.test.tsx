@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, cleanup, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import AuthInput, { AuthInputProps } from './AuthInput';
 
 describe('test AuthInput component', () => {
@@ -15,60 +16,54 @@ describe('test AuthInput component', () => {
     error: '',
     onInputChange: mockFn,
   };
-  const wrapper = shallow(<AuthInput {...props} />);
+
+  afterEach(cleanup);
 
   test('should match snapshot', () => {
-    expect(wrapper).toMatchSnapshot();
+    const { asFragment } = render(<AuthInput {...props} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
-  test('should render tag label with correct attr', () => {
-    expect(wrapper.find('label').prop('htmlFor')).toBe(props.id);
-    expect(wrapper.find('label').prop('className')).toBe('label ');
+  test('should render label that associate with input', () => {
+    render(<AuthInput {...props} />);
+    const elem = screen.getByLabelText(props.label);
+    expect(elem.tagName).toBe('INPUT');
   });
 
-  test("should render span with class='visually-hidden' with correct text", () => {
-    expect(wrapper.find('span.visually-hidden').text()).toBe(props.label);
+  test("should render tag span with label text and 'visually-hidden' class", () => {
+    render(<AuthInput {...props} />);
+    const elem = screen.getByText(props.label);
+    expect(elem).toHaveClass('visually-hidden');
   });
 
-  test('should correct render tag span with error', () => {
-    expect(
-      wrapper
-        .find('span.error')
-        .text()
-        .trim(),
-    ).toBe(props.error);
-    wrapper.setProps({ isValid: true });
-    expect(wrapper.find('span.error')).toHaveLength(0);
-    expect(wrapper.find('span.valid')).toHaveLength(1);
+  test('should render tag input with correct attr', () => {
+    render(<AuthInput {...props} />);
+    const elem = screen.getByPlaceholderText(props.placeholder);
+    expect(elem.tagName).toBe('INPUT');
+    expect(elem).toHaveValue(props.value);
+    expect(elem).toHaveAttribute('type', props.type);
   });
 
-  test('should correct render tag input with correct attr', () => {
-    const input = wrapper.find('input');
-    expect(input.prop('value')).toBe(props.value);
-    expect(input.prop('id')).toBe(props.id);
-    expect(input.prop('className')).toBe('input ');
-    expect(input.prop('name')).toBe(props.name);
-    expect(input.prop('type')).toBe(props.type);
-    expect(input.prop('placeholder')).toBe(props.placeholder);
+  test('should render correct tag span with error if props.isValid = false', () => {
+    render(<AuthInput {...props} />);
+    const elem = screen.getByTestId('error');
+    expect(elem).toHaveClass('error');
+    expect(elem).toHaveTextContent(props.error);
   });
 
-  test('should call onInputChange prop function when input change with correct arguments', () => {
-    const currentTarget = {
-      name: props.name,
-      value: 'test value',
-    };
-    wrapper.find('input').simulate('change', { currentTarget });
-    expect(mockFn).toBeCalledTimes(1);
-    expect(mockFn).toBeCalledWith(props.name, currentTarget.value);
+  test('should render correct tag span with error if props.isValid = true', () => {
+    const errorText = 'error error';
+    const newProps = { ...props, isValid: true, error: errorText };
+    render(<AuthInput {...newProps} />);
+    const elem = screen.getByText(errorText);
+    expect(elem).toHaveClass('valid');
   });
 
-  test('should correct set extension class', () => {
-    const ext = {
-      extensionContainerClass: 'extContainer',
-      extensionInputClass: 'extInput',
-    };
-    wrapper.setProps({ ...ext });
-    expect(wrapper.find('label').prop('className')).toBe(`label ${ext.extensionContainerClass}`);
-    expect(wrapper.find('input').prop('className')).toBe(`input ${ext.extensionInputClass}`);
+  test('when user enters text should call props.onInputChange function', async () => {
+    render(<AuthInput {...props} />);
+    const elem = screen.getByPlaceholderText(props.placeholder);
+    const text = 'test user input';
+    await userEvent.type(elem, text, { allAtOnce: true });
+    expect(mockFn).toHaveBeenCalledWith(props.name, text);
   });
 });

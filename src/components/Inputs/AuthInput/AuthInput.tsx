@@ -37,9 +37,8 @@ const AuthInput: React.FC<AuthInputProps> = ({
   return (
     <label htmlFor={id} className={`${styles.label} ${extensionContainerClass}`}>
       <span className="visually-hidden">{label}</span>
-      <span className={`${isValid ? styles.valid : styles.error}`}>
+      <span className={`${isValid ? styles.valid : styles.error}`} data-testid="error">
         {error}
-        {' '}
       </span>
       <input
         value={value}
