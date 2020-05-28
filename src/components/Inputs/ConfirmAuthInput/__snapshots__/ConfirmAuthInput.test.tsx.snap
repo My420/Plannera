@@ -1,17 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`test ConfirmAuthInput component should match snapshot 1`] = `
-<Memo(AuthInput)
-  error=""
-  extensionContainerClass="testContainerClass"
-  extensionInputClass="testInputClass"
-  id="confirm"
-  isValid={false}
-  label="Confirm password"
-  name="CONFIRM"
-  onInputChange={[Function]}
-  placeholder="Confirm password"
-  type="password"
-  value=""
-/>
+<DocumentFragment>
+  <label
+    class="label "
+    for="confirm"
+  >
+    <span
+      class="visually-hidden"
+    >
+      Confirm password
+    </span>
+    <span
+      class="error"
+      data-testid="error"
+    />
+    <input
+      class="input "
+      id="confirm"
+      name="CONFIRM"
+      placeholder="Confirm password"
+      type="password"
+      value=""
+    />
+  </label>
+</DocumentFragment>
 `;
