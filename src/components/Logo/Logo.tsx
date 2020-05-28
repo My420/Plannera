@@ -9,6 +9,7 @@ export interface LogoProps {
 const Logo: React.FC<LogoProps> = ({ wrapperClass, color }) => (
   <div className={wrapperClass}>
     <svg width="100%" height="100%" viewBox="0 0 321.75 286.95" xmlns="http://www.w3.org/2000/svg">
+      <title>Plannera logo</title>
       <g
         transform="matrix(.95021 -.31162 .31162 .95021 -106.29 132.88)"
         fill={`${color}`}
@@ -18,6 +19,7 @@ const Logo: React.FC<LogoProps> = ({ wrapperClass, color }) => (
         strokeLinejoin="round"
         strokeMiterlimit="4.1"
         strokeWidth="10"
+        data-testid="img"
       >
         <path d="m290.76-39.011c-116.29 5.9117-207.84 67.222-207.84 141.94 0 78.622 101.38 142.44 226.28 142.44 21.72 0 42.737-1.9295 62.625-5.5312v-39.312c-17.014 3.0554-34.967 4.6875-53.531 4.6875-107.62 0-194.97-54.977-194.97-122.72 0-61.859 72.843-113.07 167.44-121.5z" />
         <path d="m304.42-37.858c-89.455 4.5475-159.88 51.71-159.88 109.18 0 60.479 77.983 109.57 174.06 109.57 16.708 0 32.875-1.4842 48.173-4.2548v-30.24c-13.088 2.3503-26.898 3.6058-41.178 3.6058-82.783 0-149.98-42.29-149.98-94.399 0-47.584 56.033-86.978 128.8-93.462z" />
