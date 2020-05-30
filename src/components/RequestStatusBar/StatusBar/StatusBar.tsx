@@ -8,7 +8,7 @@ export interface StatusBarProps {
 }
 
 const StatusBar: React.FC<StatusBarProps> = ({ isLoading, error }) => (
-  <div className={styles.container}>
+  <div className={styles.container} data-testid="container">
     {isLoading && <Loader extWrapperClass={styles.loader} />}
     {error && <p className={styles.error}>{error}</p>}
   </div>
