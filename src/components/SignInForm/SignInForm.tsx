@@ -66,7 +66,7 @@ const SignInForm: React.FC<ISignInFormProps> = ({ from }) => {
       </fieldset>
       <fieldset className={styles.controls}>
         <MenuSubmitButton
-          text="Sign in"
+          text="Continue"
           name="signInSubmit"
           onButtonClick={onSubmit}
           disabled={isSubmitDisabled}

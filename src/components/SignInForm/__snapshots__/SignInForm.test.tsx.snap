@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test SignInForm component component view test should match snapshot 1`] = `
+<DocumentFragment>
+  <form
+    action="signin.php"
+    class="form"
+    name="signInForm"
+  >
+    <p
+      class="title"
+    >
+      Sign in
+    </p>
+    <div
+      class="status"
+    >
+      <div
+        class="container"
+        data-testid="container"
+      />
+    </div>
+    <fieldset
+      class="signin"
+    >
+      <label
+        class="label input"
+        for="email"
+      >
+        <span
+          class="visually-hidden"
+        >
+          Email
+        </span>
+        <span
+          class="error"
+          data-testid="error"
+        />
+        <input
+          class="input "
+          id="email"
+          name="EMAIL"
+          placeholder="Email"
+          type="email"
+          value=""
+        />
+      </label>
+      <label
+        class="label input"
+        for="password"
+      >
+        <span
+          class="visually-hidden"
+        >
+          Password
+        </span>
+        <span
+          class="error"
+          data-testid="error"
+        />
+        <input
+          class="input "
+          id="password"
+          name="PASSWORD"
+          placeholder="Password"
+          type="password"
+          value=""
+        />
+      </label>
+    </fieldset>
+    <fieldset
+      class="controls"
+    >
+      <button
+        class="button "
+        disabled=""
+        name="signInSubmit"
+        type="submit"
+      >
+        Continue
+      </button>
+      <a
+        class="link"
+        href="/signup"
+      >
+        Sign up
+      </a>
+    </fieldset>
+  </form>
+</DocumentFragment>
+`;
