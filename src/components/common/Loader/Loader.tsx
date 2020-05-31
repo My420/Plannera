@@ -17,6 +17,7 @@ const Loader: React.SFC<LoaderProps> = ({ extSvgClass, extWrapperClass, color })
       xmlns="http://www.w3.org/2000/svg"
       fill={color}
     >
+      <title>Loading...</title>
       <circle cx="15" cy="15" r="15">
         <animate
           attributeName="r"
