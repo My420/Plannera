@@ -1,0 +1,157 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test SignUpForm component component view test should match snapshot 1`] = `
+<DocumentFragment>
+  <form
+    action="signup.php"
+    class="form"
+    name="signUpForm"
+  >
+    <p
+      class="title"
+    >
+      Create account
+    </p>
+    <div
+      class="status"
+    >
+      <div
+        class="container"
+        data-testid="container"
+      />
+    </div>
+    <fieldset
+      class="signup"
+    >
+      <label
+        class="label input"
+        for="email"
+      >
+        <span
+          class="visually-hidden"
+        >
+          Email
+        </span>
+        <span
+          class="error"
+          data-testid="error"
+        />
+        <input
+          class="input "
+          id="email"
+          name="EMAIL"
+          placeholder="Email"
+          type="email"
+          value=""
+        />
+      </label>
+      <label
+        class="label input"
+        for="password"
+      >
+        <span
+          class="visually-hidden"
+        >
+          Password
+        </span>
+        <span
+          class="error"
+          data-testid="error"
+        />
+        <input
+          class="input "
+          id="password"
+          name="PASSWORD"
+          placeholder="Password"
+          type="password"
+          value=""
+        />
+      </label>
+      <label
+        class="label input"
+        for="confirm"
+      >
+        <span
+          class="visually-hidden"
+        >
+          Confirm password
+        </span>
+        <span
+          class="error"
+          data-testid="error"
+        />
+        <input
+          class="input "
+          id="confirm"
+          name="CONFIRM"
+          placeholder="Confirm password"
+          type="password"
+          value=""
+        />
+      </label>
+      <label
+        class="label input"
+        for="firstName"
+      >
+        <span
+          class="visually-hidden"
+        >
+          First name
+        </span>
+        <span
+          class="error"
+          data-testid="error"
+        />
+        <input
+          class="input "
+          id="firstName"
+          name="FIRST_NAME"
+          placeholder="First name"
+          type="text"
+          value=""
+        />
+      </label>
+      <label
+        class="label input"
+        for="lastName"
+      >
+        <span
+          class="visually-hidden"
+        >
+          Last name
+        </span>
+        <span
+          class="error"
+          data-testid="error"
+        />
+        <input
+          class="input "
+          id="lastName"
+          name="LAST_NAME"
+          placeholder="Last name"
+          type="text"
+          value=""
+        />
+      </label>
+    </fieldset>
+    <fieldset
+      class="controls"
+    >
+      <button
+        class="button "
+        disabled=""
+        name="signUpSubmit"
+        type="submit"
+      >
+        Continue
+      </button>
+      <a
+        class="link"
+        href="/signin"
+      >
+        Sign in
+      </a>
+    </fieldset>
+  </form>
+</DocumentFragment>
+`;
