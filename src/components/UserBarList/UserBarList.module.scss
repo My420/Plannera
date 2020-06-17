@@ -1,0 +1,35 @@
+@import '../../sass/variables.scss';
+
+.container {
+  position: absolute;
+  top: 50px;
+  left: calc(-300px + 90%);
+
+  width: 300px;
+
+  border: 2px solid $border-user-list-color;
+  background-color: $bg-app-color;
+}
+.title {
+  padding: 10px 0;
+  font-size: 24px;
+  text-align: center;
+}
+.list {
+  padding: 0 5px;
+  list-style: none;
+  word-wrap: break-word;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+}
+
+.value {
+  text-align: center;
+}
+
+.item:last-child {
+  margin: 20px 0;
+}

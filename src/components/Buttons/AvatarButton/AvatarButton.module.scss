@@ -1,0 +1,18 @@
+@import '../../../sass/variables.scss';
+
+.button {
+  box-sizing: border-box;
+
+  width: 40px;
+  height: 40px;
+
+  border: none;
+  border-radius: 50%;
+
+  background-color: $bg-button-avatar;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: $hover-auth-button-color;
+}
