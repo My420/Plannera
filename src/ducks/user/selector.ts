@@ -1,6 +1,6 @@
 import { AppState } from '../../redux/store';
 import { moduleName } from './constant';
-import { IUserInfo, IUserStatus } from '../../types/user';
+import { IUserInfo, IUserStatus } from './types';
 
 export const getUserStatus = (store: AppState): IUserStatus => ({
   userID: store[moduleName].get('userID'),
