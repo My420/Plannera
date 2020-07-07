@@ -1,4 +1,3 @@
-import { ISignUpFormData, ISignInFormData } from '../../types/signUpForm';
 import {
   SIGN_UP_REQUEST,
   SIGN_UP_ERROR,
@@ -9,7 +8,24 @@ import {
   SIGN_OUT_SUCCESS,
   SIGN_OUT_ERROR,
   AUTH_CLEAR_ERROR,
+  EMAIL,
+  PASSWORD,
+  FIRST_NAME,
+  LAST_NAME,
 } from './constant';
+
+export interface ISignUpFormData {
+  [EMAIL]: string;
+  [PASSWORD]: string;
+  [FIRST_NAME]: string;
+  [LAST_NAME]: string;
+}
+
+export interface ISignInFormData {
+  [EMAIL]: string;
+  [PASSWORD]: string;
+  from: string;
+}
 
 export interface IAuthData {
   userID: null | string;

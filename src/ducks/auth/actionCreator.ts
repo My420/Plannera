@@ -1,4 +1,3 @@
-import { ISignUpFormData, ISignInFormData } from '../../types/signUpForm';
 import {
   ISignUpRequestAction,
   ISignUpErrorAction,
@@ -10,6 +9,8 @@ import {
   ISignOutErrorAction,
   IAuthData,
   IAuthClearErrorAction,
+  ISignUpFormData,
+  ISignInFormData,
 } from './types';
 import {
   SIGN_UP_REQUEST,

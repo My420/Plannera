@@ -5,10 +5,16 @@ import {
 } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import { IAuthChannelAction, ISignUpRequestAction, ISignInRequestAction } from './types';
-import { SIGN_OUT_REQUEST, SIGN_IN_REQUEST, SIGN_UP_REQUEST } from './constant';
 import {
-  EMAIL, MAIN_PAGE, PASSWORD, LAST_NAME, FIRST_NAME,
-} from '../../utils/constant';
+  SIGN_OUT_REQUEST,
+  SIGN_IN_REQUEST,
+  SIGN_UP_REQUEST,
+  EMAIL,
+  MAIN_PAGE,
+  PASSWORD,
+  LAST_NAME,
+  FIRST_NAME,
+} from './constant';
 import {
   signInError,
   signUpError,
